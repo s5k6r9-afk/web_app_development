@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center py-5">
+    <div class="col-md-8 text-center">
+        <!-- 顯示主題對應的中文標題 -->
+        {% set theme_titles = {'love': '💖 愛情糾葛', 'career': '💼 事業成就', 'comprehensive': '🌟 綜合運勢'} %}
+        <h2 class="fw-bold mb-3">探索 {{ theme_titles.get(theme, '神祕魔法') }} 的指引</h2>
+        <p class="text-muted mb-5 fs-5">請在心中專注默念你目前遭遇的狀況，並做三次深呼吸。當你感到屏息時，點擊下方牌卡抽取你的命運。</p>
+        
+        <!-- 卡片發牌特效準備區 -->
+        <div id="drawAnimationContainer" class="mb-5 position-relative d-flex justify-content-center align-items-center" style="height: 350px;">
+            <!-- 背景發光特效 -->
+            <div class="position-absolute rounded-circle shadow-lg" style="width: 250px; height: 250px; background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, rgba(0,0,0,0) 70%); z-index: 0; animation: pulse 3s infinite;"></div>
+            
+            <!-- 實體卡背 -->
+            <div class="card shadow rounded-4 position-relative z-1" style="width: 220px; height: 320px; background: linear-gradient(135deg, #1e2025, #353b48); border: 2px solid #57606f;">
+                <div class="card-body d-flex align-items-center justify-content-center text-white flex-column">
+                    <div style="font-size: 4rem; opacity: 0.8;">👁️</div>
+                    <div class="mt-3 opacity-50" style="letter-spacing: 2px;">THE FATE</div>
+                </div>
+            </div>
+        </div>
+
+        <form action="{{ url_for('draw.draw_execute') }}" method="POST">
+            <input type="hidden" name="theme" value="{{ theme }}">
+            <button type="submit" class="btn btn-dark btn-lg px-5 py-3 rounded-pill fw-bold shadow">
+                憑直覺點擊揭曉牌卡
+            </button>
+        </form>
+    </div>
+</div>
+
+<style>
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.3); opacity: 0.3; }
+    100% { transform: scale(1); opacity: 0.8; }
+}
+</style>
+{% endblock %}

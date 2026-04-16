@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center py-4">
+    <div class="col-lg-8 col-md-10 text-center">
+        <!-- 裝飾線與標題 -->
+        <h5 class="text-muted tracking-widest mb-1">— 命運的解語 —</h5>
+        <h2 class="fw-bold mb-4 display-6">{{ record.name }}</h2>
+        
+        <div class="card shadow-lg border-0 p-4 p-md-5 mb-5 rounded-4">
+            
+            {% if record.image_url %}
+            <img src="{{ record.image_url }}" class="mx-auto d-block mb-4 img-fluid rounded border" style="max-height: 480px;" alt="{{ record.name }}">
+            {% else %}
+            <!-- 若無圖片，展示精美 CSS 漸層卡面替代 -->
+            <div class="mx-auto rounded-3 d-flex flex-column align-items-center justify-content-center mb-5 shadow" style="width: 280px; height: 420px; background: linear-gradient(135deg, #2c3e50, #001b3a); border: 4px inset rgba(255,255,255,0.1);">
+                <div class="text-white opacity-75 fs-1 mb-2">✨</div>
+                <h2 class="m-0 text-light fw-bold px-3 lh-base" style="writing-mode: vertical-rl; letter-spacing: 5px;">{{ record.name }}</h2>
+            </div>
+            {% endif %}
+            
+            <!-- 標籤 -->
+            <div class="mb-4">
+                {% set theme_map = {'love': '愛情', 'career': '事業', 'comprehensive': '綜合'} %}
+                <span class="badge bg-dark px-3 py-2 fs-6 rounded-pill">象限：{{ theme_map.get(record.theme, record.theme) }}</span>
+                <span class="badge bg-light text-dark px-3 py-2 fs-6 rounded-pill border ms-2">歸檔日期：{{ record.date }}</span>
+            </div>
+            
+            <hr class="text-muted opacity-25 mx-5 mb-4">
+            
+            <!-- 解析內文區塊 -->
+            <div class="text-start bg-light p-4 p-md-5 rounded-4 text-dark lh-lg fs-5 border shadow-sm">
+                <!-- 運用 replace 把純文字的換行符變成 HTML <br> 標籤呈現 -->
+                {{ record.description | replace('\n', '<br><br>') | safe }}
+            </div>
+        </div>
+        
+        <!-- 操作按鈕 -->
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="{{ url_for('main.index') }}" class="btn btn-outline-dark btn-lg px-4 rounded-pill">繼續其他占卜</a>
+            <a href="{{ url_for('main.history') }}" class="btn btn-dark btn-lg px-4 rounded-pill">返回歷史長廊</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

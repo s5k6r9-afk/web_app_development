@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="text-center py-5">
+    <h1 class="display-4 fw-bold mb-3">尋求今日的命運指引</h1>
+    <p class="lead text-muted mb-5">請在下方選擇您正在面臨的煩惱象限，開啟與潛意識的深層對話。</p>
+    
+    <div class="row justify-content-center gap-4 px-3">
+        <!-- 愛情 -->
+        <div class="col-md-3">
+            <div class="card h-100 shadow border-0 transition-hover">
+                <div class="card-body py-5">
+                    <div class="display-3 mb-3">💖</div>
+                    <h3 class="card-title fw-bold text-danger">愛情糾葛</h3>
+                    <p class="card-text text-muted mb-4">感情迷惘？單身尋緣？來聽聽愛情能量的啟示。</p>
+                    <a href="{{ url_for('draw.draw_page', theme='love') }}" class="btn btn-outline-danger w-100 rounded-pill fw-bold">選擇此主題</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 事業 -->
+        <div class="col-md-3">
+            <div class="card h-100 shadow border-0 transition-hover">
+                <div class="card-body py-5">
+                    <div class="display-3 mb-3">💼</div>
+                    <h3 class="card-title fw-bold text-primary">事業成就</h3>
+                    <p class="card-text text-muted mb-4">求職不順？抉擇十字路口？洞悉未來的職場指引。</p>
+                    <a href="{{ url_for('draw.draw_page', theme='career') }}" class="btn btn-outline-primary w-100 rounded-pill fw-bold">選擇此主題</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 綜合 -->
+        <div class="col-md-3">
+            <div class="card h-100 shadow border-0 transition-hover">
+                <div class="card-body py-5">
+                    <div class="display-3 mb-3">🌟</div>
+                    <h3 class="card-title fw-bold text-success">綜合運勢</h3>
+                    <p class="card-text text-muted mb-4">無特定想法？隨機抽取今日的神祕能量為你加持。</p>
+                    <a href="{{ url_for('draw.draw_page', theme='comprehensive') }}" class="btn btn-outline-success w-100 rounded-pill fw-bold">選擇此主題</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.transition-hover {
+    transition: transform 0.3s ease;
+}
+.transition-hover:hover {
+    transform: translateY(-10px);
+}
+</style>
+{% endblock %}

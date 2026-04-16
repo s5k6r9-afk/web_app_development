@@ -1,4 +1,5 @@
 from flask import render_template, request, session, redirect, url_for, flash
+from app.models.record import Record
 from . import main_bp
 
 @main_bp.route('/')
@@ -8,7 +9,7 @@ def index():
     處理邏輯: 判定是否登入，渲染所有可選的占卜分類。
     輸出: 渲染 'index.html'
     """
-    pass
+    return render_template('index.html')
 
 @main_bp.route('/history')
 def history():
@@ -19,4 +20,10 @@ def history():
       2. 透過 Record.get_all(user_id) 取得該使用者的歷史紀錄。
     輸出: 渲染 'history.html'
     """
-    pass
+    user_id = session.get('user_id')
+    if not user_id:
+        flash('想查看歷史占卜精華？請先登入您的帳號', 'warning')
+        return redirect(url_for('auth.login'))
+        
+    records = Record.get_all(user_id)
+    return render_template('history.html', records=records)

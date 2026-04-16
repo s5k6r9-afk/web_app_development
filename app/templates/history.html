@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="py-4">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">歷史軌跡長廊</h2>
+        <p class="text-muted">這裡記載著你過去與潛意識對話的點點滴滴，隨時回來回味它們的應證。</p>
+    </div>
+    
+    {% if not records %}
+    <div class="card shadow-sm border-0 py-5 text-center bg-light">
+        <div class="card-body">
+            <h1 class="display-1 text-muted opacity-25 mb-4">📭</h1>
+            <h4 class="fw-bold">你似乎還沒有留下任何足跡</h4>
+            <p class="text-muted mb-4">趕快前往探索頁面體驗您的第一次神祕占卜吧！</p>
+            <a href="{{ url_for('main.index') }}" class="btn btn-dark px-4 rounded-pill">前往探索</a>
+        </div>
+    </div>
+    {% else %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% set theme_color_map = {'love': 'danger', 'career': 'primary', 'comprehensive': 'success'} %}
+        {% set theme_text_map = {'love': '愛情', 'career': '事業', 'comprehensive': '綜合'} %}
+        
+        {% for record in records %}
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 transition-hover">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge bg-{{ theme_color_map.get(record.theme, 'dark') }} px-2 py-1">
+                            {{ theme_text_map.get(record.theme, record.theme) }}
+                        </span>
+                        <small class="text-muted fw-bold">{{ record.date }}</small>
+                    </div>
+                    <h5 class="card-title fw-bold fs-4 mb-3">{{ record.name }}</h5>
+                    <p class="card-text text-muted text-truncate" style="max-height: 3rem; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; white-space: normal;">
+                        {{ record.description }}
+                    </p>
+                </div>
+                <div class="card-footer bg-white border-0 pt-0 pb-4 px-4">
+                    <a href="{{ url_for('draw.result', record_id=record.id) }}" class="btn btn-outline-dark btn-sm w-100 rounded-pill">查看完整解析</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.transition-hover {
+    transition: all 0.2s ease-in-out;
+}
+.transition-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+</style>
+{% endblock %}
